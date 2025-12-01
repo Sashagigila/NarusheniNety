@@ -44,7 +44,12 @@
 
     <main class="reports-list">
         <h1>Список заявлений</h1>
-        
+        <div>
+            <span>Сортировка по дате создания: </span>
+            <a href="{{route('reports.index', ['sort' => 'desc'])}}">сначала новые</a>
+            <a href="{{route('reports.index', ['sort' => 'asc'])}}">сначала старые</a>
+        </div>
+        <br>
         <a href="{{ route('reports.create') }}" class="create-link">Создать заявление</a>
 
         @foreach($reports as $report)
@@ -52,7 +57,7 @@
                 <h3>Номер автомобиля: {{ $report->number }}</h3>
                 <p><strong>Описание:</strong> {{ $report->description }}</p>
                 <p><strong>Дата создания:</strong> {{ $report->created_at->format('d.m.Y H:i') }}</p>
-                <p><strong>Статус:</strong> {{ $report->status->name ?? 'Не указан' }}</p>
+                <p><strong>Статус:</strong> {{$report->status->name}}</p>
             
                   <div class="report-actions">
             <a href="{{ route('reports.edit', $report->id) }}" 
@@ -69,7 +74,7 @@
 
             </div>
         @endforeach
-
+{{$reports->links()}}
         @if($reports->count() == 0)
             <p>Заявлений пока нет.</p>
         @endif

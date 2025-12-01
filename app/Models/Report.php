@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Report extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasFactory;
 
     protected $guarded = [];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
