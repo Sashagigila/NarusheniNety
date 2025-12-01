@@ -80,9 +80,7 @@
             
             <div class="form-group">
                 <label for="description">Описание нарушения:</label>
-                <textarea id="description" name="description" rows="5" required>
-                    {{ old('description', $report->description) }}
-                </textarea>
+                <textarea id="description" name="description" rows="5" required>{{ old('description', $report->description) }}</textarea>
                 @error('description')
                     <div class="error">{{ $message }}</div>
                 @enderror

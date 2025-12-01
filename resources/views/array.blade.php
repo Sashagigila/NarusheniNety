@@ -36,6 +36,7 @@
             <ul>
                 <li><a href="{{ route('home') }}">Главная</a></li>
                 <li><a href="{{ route('array') }}">Массивы</a></li>
+                <li><a href="{{ route('reports.index') }}">Заявления</a></li>
             </ul>
         </nav>
     </header>
