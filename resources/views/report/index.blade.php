@@ -46,8 +46,8 @@
         <h1>Список заявлений</h1>
         <div>
             <span>Сортировка по дате создания: </span>
-            <a href="{{route('reports.index', ['sort' => 'desc'])}}">сначала новые</a>
-            <a href="{{route('reports.index', ['sort' => 'asc'])}}">сначала старые</a>
+            <a href="{{route('reports.index', ['sort' => 'desc', 'status' => $status]) }}">сначала новые</a>
+            <a href="{{route('reports.index', ['sort' => 'asc', 'status' => $status])}}">сначала старые</a>
         </div>
         <br>
         <a href="{{ route('reports.create') }}" class="create-link">Создать заявление</a>
@@ -57,8 +57,16 @@
                 <h3>Номер автомобиля: {{ $report->number }}</h3>
                 <p><strong>Описание:</strong> {{ $report->description }}</p>
                 <p><strong>Дата создания:</strong> {{ $report->created_at->format('d.m.Y H:i') }}</p>
-                <p><strong>Статус:</strong> {{$report->status->name}}</p>
-            
+                <p><strong>Статус:</strong>{{ $report->status }}</p> 
+                @foreach($statuses as $status)
+                <li>
+                    <p><strong>Статус:</strong></p> 
+                    <a href="{{ route('reports.index', ['sort' => $sort, 'status' => $status->id]) }}">">
+                        {{$status->name}}
+                    </a>
+                </li>
+                @endforeach
+                
                   <div class="report-actions">
             <a href="{{ route('reports.edit', $report->id) }}" 
                style="margin-right: 10px; color: #007bff; text-decoration: none;">
