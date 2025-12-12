@@ -5,14 +5,14 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ReportFactory extends Factory
 {
-    public function definition()
+    public function definition(): array
     {
-        $faker = \Faker\Factory::create(); 
+        $faker = \Faker\Factory::create();
         return [
-            'number' => $faker->unique()->numerify('AAA-###'),
-            'description' => $faker->paragraph,
-            'created_at' => $faker->dateTimeBetween('-1 week', 'now'),
-            'status_id' => $faker->numberBetween(1, 3)
+            'number' => $faker -> numerify('aaa-###'),
+            'description' => $faker -> paragraph,
+            'created_at' => $faker -> dateTimeBetween('-1 week', 'now'),
+            'status_id' => 1
         ];
     }
 }

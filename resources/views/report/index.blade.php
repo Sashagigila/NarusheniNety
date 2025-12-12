@@ -26,6 +26,16 @@
             text-decoration: none;
             border-radius: 5px;
         }
+        .filter-links ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .filter-links li {
+            display: inline;
+        }
     </style>
 </head>
 <body>
@@ -34,7 +44,7 @@
             <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Логотип" width="100">
         </div>
         <nav>
-            <ul>
+            <ul style="display: flex; list-style: none; gap: 15px; padding: 0;">
                 <li><a href="{{ route('home') }}">Главная</a></li>
                 <li><a href="{{ route('array') }}">Массивы</a></li>
                 <li><a href="{{ route('reports.index') }}">Заявления</a></li>
@@ -44,11 +54,26 @@
 
     <main class="reports-list">
         <h1>Список заявлений</h1>
+        
         <div>
             <span>Сортировка по дате создания: </span>
-            <a href="{{route('reports.index', ['sort' => 'desc'])}}">сначала новые</a>
-            <a href="{{route('reports.index', ['sort' => 'asc'])}}">сначала старые</a>
+            <a href="{{ route('reports.index', ['sort' => 'desc']) }}">сначала новые</a>
+            <a href="{{ route('reports.index', ['sort' => 'asc']) }}">сначала старые</a>
         </div>
+        
+        <div class="filter-links">
+            <p>Фильтрация по статусу заявки:</p>
+            <ul>
+                @foreach($statuses as $status)
+                    <li>
+                        <a href="{{ route('reports.index', ['sort' => $sort ?? 'desc', 'status' => $status->id]) }}">
+                            {{ $status->name }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        
         <br>
         <a href="{{ route('reports.create') }}" class="create-link">Создать заявление</a>
 
@@ -57,31 +82,32 @@
                 <h3>Номер автомобиля: {{ $report->number }}</h3>
                 <p><strong>Описание:</strong> {{ $report->description }}</p>
                 <p><strong>Дата создания:</strong> {{ $report->created_at->format('d.m.Y H:i') }}</p>
-                <p><strong>Статус:</strong> {{$report->status->name}}</p>
+                <p><strong>Статус:</strong> {{ $report->status->name ?? 'не указан' }}</p>
             
-                  <div class="report-actions">
-            <a href="{{ route('reports.edit', $report->id) }}" 
-               style="margin-right: 10px; color: #007bff; text-decoration: none;">
-                Редактировать
-            </a>
-    </div>
-<br>
-                <form method="POST" action="{{ route('reports.destroy', $report->id) }}" style="display: inline;">
-        @csrf
-        @method('DELETE')
-        <button type="submit" >Удалить</button>
-    </form>
-
+                <div class="report-actions">
+                    <a href="{{ route('reports.edit', $report->id) }}" 
+                       style="margin-right: 10px; color: #007bff; text-decoration: none;">
+                        Редактировать
+                    </a>
+                    
+                    <form method="POST" action="{{ route('reports.destroy', $report->id) }}" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Удалить</button>
+                    </form>
+                </div>
             </div>
         @endforeach
-{{$reports->links()}}
+        
+        {{ $reports->links() }}
+        
         @if($reports->count() == 0)
             <p>Заявлений пока нет.</p>
         @endif
     </main>
 
     <footer>
-        <p>&copy; {{ date('Y') }} Аминев Александр Анатльевич П-44.</p>
+        <p>&copy; {{ date('Y') }} Аминев Александр Анатольевич П-44.</p>
     </footer>
 </body>
 </html>
