@@ -57,8 +57,13 @@
         
         <div>
             <span>Сортировка по дате создания: </span>
+<<<<<<< HEAD
             <a href="{{ route('reports.index', ['sort' => 'desc']) }}">сначала новые</a>
             <a href="{{ route('reports.index', ['sort' => 'asc']) }}">сначала старые</a>
+=======
+            <a href="{{route('reports.index', ['sort' => 'desc', 'status' => $status]) }}">сначала новые</a>
+            <a href="{{route('reports.index', ['sort' => 'asc', 'status' => $status])}}">сначала старые</a>
+>>>>>>> f90c7e098f3444578514822755aa4928ea8c0a4e
         </div>
         
         <div class="filter-links">
@@ -82,6 +87,7 @@
                 <h3>Номер автомобиля: {{ $report->number }}</h3>
                 <p><strong>Описание:</strong> {{ $report->description }}</p>
                 <p><strong>Дата создания:</strong> {{ $report->created_at->format('d.m.Y H:i') }}</p>
+<<<<<<< HEAD
                 <p><strong>Статус:</strong> {{ $report->status->name ?? 'не указан' }}</p>
             
                 <div class="report-actions">
@@ -96,6 +102,31 @@
                         <button type="submit">Удалить</button>
                     </form>
                 </div>
+=======
+                <p><strong>Статус:</strong>{{ $report->status }}</p> 
+                @foreach($statuses as $status)
+                <li>
+                    <p><strong>Статус:</strong></p> 
+                    <a href="{{ route('reports.index', ['sort' => $sort, 'status' => $status->id]) }}">">
+                        {{$status->name}}
+                    </a>
+                </li>
+                @endforeach
+                
+                  <div class="report-actions">
+            <a href="{{ route('reports.edit', $report->id) }}" 
+               style="margin-right: 10px; color: #007bff; text-decoration: none;">
+                Редактировать
+            </a>
+    </div>
+<br>
+                <form method="POST" action="{{ route('reports.destroy', $report->id) }}" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" >Удалить</button>
+    </form>
+
+>>>>>>> f90c7e098f3444578514822755aa4928ea8c0a4e
             </div>
         @endforeach
         
